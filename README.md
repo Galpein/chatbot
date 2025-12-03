@@ -44,4 +44,3 @@ Asistente virtual para agencia de viajes con integración de Google Gemini AI.
 1. Ve a la configuración de tu proyecto en Vercel
 2. Añade una variable de entorno llamada `GEMINI_API_KEY`
 3. Modifica el código para leerla desde `process.env.GEMINI_API_KEY` (requiere un pequeño ajuste)
-
