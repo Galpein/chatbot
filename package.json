@@ -1,0 +1,17 @@
+{
+  "name": "chatbot-agencia-viajes",
+  "version": "1.0.0",
+  "description": "Asistente virtual para agencia de viajes con chatbot",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "chatbot",
+    "viajes",
+    "agencia"
+  ],
+  "author": "",
+  "license": "MIT"
+}
+
