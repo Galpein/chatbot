@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de iframe - Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .code-block code {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .preview {
+            margin: 30px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔗 Código iframe para tu Chatbot</h1>
+        
+        <h2>Opción 1: Iframe básico (recomendado)</h2>
+        <div class="code-block">
+            <code>&lt;iframe 
+    src="https://chatbot-gules-eta-69.vercel.app/" 
+    width="100%" 
+    height="600" 
+    frameborder="0"
+    allow="clipboard-read; clipboard-write"
+    style="border: none; border-radius: 8px;"&gt;
+&lt;/iframe&gt;</code>
+        </div>
+
+        <h2>Opción 2: Iframe responsive (se adapta al tamaño)</h2>
+        <div class="code-block">
+            <code>&lt;div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"&gt;
+    &lt;iframe 
+        src="https://chatbot-gules-eta-69.vercel.app/" 
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 8px;"
+        allow="clipboard-read; clipboard-write"
+    &gt;&lt;/iframe&gt;
+&lt;/div&gt;</code>
+        </div>
+
+        <h2>Opción 3: Iframe con ancho fijo (400px - tamaño del chat)</h2>
+        <div class="code-block">
+            <code>&lt;iframe 
+    src="https://chatbot-gules-eta-69.vercel.app/" 
+    width="400" 
+    height="600" 
+    frameborder="0"
+    allow="clipboard-read; clipboard-write"
+    style="border: none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"&gt;
+&lt;/iframe&gt;</code>
+        </div>
+
+        <h2>Opción 4: Iframe flotante (botón flotante)</h2>
+        <div class="code-block">
+            <code>&lt;!-- Botón flotante --&gt;
+&lt;button onclick="document.getElementById('chatbot-iframe').style.display='block'" 
+        style="position: fixed; bottom: 20px; right: 20px; background: #2563eb; color: white; border: none; padding: 15px 20px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); z-index: 1000;"&gt;
+    💬 Chat
+&lt;/button&gt;
+
+&lt;!-- Iframe oculto inicialmente --&gt;
+&lt;div id="chatbot-iframe" style="display: none; position: fixed; bottom: 80px; right: 20px; width: 400px; height: 600px; z-index: 999; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border-radius: 8px; overflow: hidden;"&gt;
+    &lt;div style="background: #2563eb; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center;"&gt;
+        &lt;span&gt;Asistente Virtual&lt;/span&gt;
+        &lt;button onclick="document.getElementById('chatbot-iframe').style.display='none'" 
+                style="background: transparent; border: none; color: white; cursor: pointer; font-size: 20px;"&gt;×&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;iframe 
+        src="https://chatbot-gules-eta-69.vercel.app/" 
+        width="100%" 
+        height="calc(100% - 40px)" 
+        frameborder="0"
+        allow="clipboard-read; clipboard-write"
+        style="border: none;"&gt;
+    &lt;/iframe&gt;
+&lt;/div&gt;</code>
+        </div>
+
+        <h2>📱 Ejemplo en vivo (Opción 1)</h2>
+        <div class="preview">
+            <div class="iframe-container">
+                <iframe 
+                    src="https://chatbot-gules-eta-69.vercel.app/" 
+                    allow="clipboard-read; clipboard-write"
+                ></iframe>
+            </div>
+        </div>
+
+        <h2>📝 Notas importantes:</h2>
+        <ul>
+            <li><strong>Altura recomendada:</strong> Mínimo 600px para ver el chat completo</li>
+            <li><strong>Ancho recomendado:</strong> 400px (tamaño del panel de chat) o 100% para pantalla completa</li>
+            <li><strong>Atributo allow:</strong> Permite funcionalidades del navegador dentro del iframe</li>
+            <li><strong>Responsive:</strong> La opción 2 se adapta automáticamente al tamaño de la pantalla</li>
+        </ul>
+    </div>
+</body>
+</html>
+
