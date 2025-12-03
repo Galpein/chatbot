@@ -110,11 +110,16 @@ VERSIÓN: 2025.1 | ESTADO: VIGENTE
                 setIsLoading(true);
 
                 try {
-                    // ⚠️ IMPORTANTE: Pon tu API KEY de Google Gemini aquí abajo entre las comillas
-                    const apiKey = ""; 
+                    // ⚠️ IMPORTANTE: Obtener API KEY desde:
+                    // 1. Parámetro de URL (?apiKey=...)
+                    // 2. Variable en el código (línea siguiente)
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const apiKeyFromUrl = urlParams.get('apiKey');
+                    const apiKeyFromCode = ""; // Pon tu API KEY aquí si no usas URL
+                    const apiKey = apiKeyFromUrl || apiKeyFromCode;
                     
                     if (!apiKey) {
-                        setMessages(prev => [...prev, { role: 'model', text: "⚠️ Error: Falta la API Key en el código. Abre el archivo HTML y añade tu clave de Google Gemini." }]);
+                        setMessages(prev => [...prev, { role: 'model', text: "⚠️ Error: Falta la API Key. Añádela en el código o como parámetro en la URL (?apiKey=TU_CLAVE)" }]);
                         setIsLoading(false);
                         return;
                     }
@@ -123,18 +128,46 @@ VERSIÓN: 2025.1 | ESTADO: VIGENTE
                         `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`,
                         {
                             method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
+                            headers: { 
+                                'Content-Type': 'application/json',
+                            },
+                            mode: 'cors',
                             body: JSON.stringify({
                                 contents: [{ parts: [{ text: userMsg }] }],
                                 systemInstruction: { parts: [{ text: `ERES UN EXPERTO EN VIAJES. ENTIENDE Y RESPONDE USANDO SOLO ESTE TEXTO:\n\n${documentText}\n\nSé breve, usa emojis y razona las respuestas.` }] }
                             })
                         }
                     );
+
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        const errorMsg = errorData.error?.message || `Error HTTP: ${response.status} ${response.statusText}`;
+                        setMessages(prev => [...prev, { role: 'model', text: `❌ Error: ${errorMsg}` }]);
+                        setIsLoading(false);
+                        return;
+                    }
+
                     const data = await response.json();
-                    const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Error en la respuesta.";
+                    
+                    if (data.error) {
+                        setMessages(prev => [...prev, { role: 'model', text: `❌ Error de API: ${data.error.message || 'Error desconocido'}` }]);
+                        setIsLoading(false);
+                        return;
+                    }
+
+                    const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                    
+                    if (!botReply) {
+                        setMessages(prev => [...prev, { role: 'model', text: "❌ No se recibió respuesta del servidor. Verifica tu API Key." }]);
+                        setIsLoading(false);
+                        return;
+                    }
+
                     setMessages(prev => [...prev, { role: 'model', text: botReply }]);
                 } catch (error) {
-                    setMessages(prev => [...prev, { role: 'model', text: "❌ Error de conexión." }]);
+                    console.error('Error en handleSend:', error);
+                    const errorMessage = error.message || 'Error de conexión';
+                    setMessages(prev => [...prev, { role: 'model', text: `❌ Error: ${errorMessage}. Verifica tu conexión a internet y la API Key.` }]);
                 } finally {
                     setIsLoading(false);
                 }

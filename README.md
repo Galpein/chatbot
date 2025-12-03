@@ -16,12 +16,23 @@ Asistente virtual para agencia de viajes con integración de Google Gemini AI.
 
 ## 🔧 Configuración
 
+Hay dos formas de configurar tu API Key de Google Gemini:
+
+### Opción 1: En el código (recomendado para desarrollo)
 1. Abre el archivo `index.html`
-2. Busca la línea que dice: `const apiKey = "";`
+2. Busca la línea que dice: `const apiKeyFromCode = "";`
 3. Añade tu API Key de Google Gemini entre las comillas:
    ```javascript
-   const apiKey = "TU_API_KEY_AQUI";
+   const apiKeyFromCode = "TU_API_KEY_AQUI";
    ```
+
+### Opción 2: Desde la URL (recomendado para producción/iframe)
+Pasa la API Key como parámetro en la URL:
+```
+https://chatbot-gules-eta-69.vercel.app/?apiKey=TU_API_KEY_AQUI
+```
+
+⚠️ **IMPORTANTE**: Si usas la Opción 2 en iframes, ten cuidado de no exponer tu API Key públicamente. Considera usar un proxy o backend para protegerla.
 
 ## 🌐 Despliegue en Vercel
 
@@ -39,8 +50,19 @@ Para insertar el chatbot en tu sitio web, usa este código iframe:
 
 ### Opción 1: Iframe básico (recomendado)
 ```html
+<!-- Sin API Key en URL (usa la del código) -->
 <iframe 
     src="https://chatbot-gules-eta-69.vercel.app/" 
+    width="100%" 
+    height="600" 
+    frameborder="0"
+    allow="clipboard-read; clipboard-write"
+    style="border: none; border-radius: 8px;">
+</iframe>
+
+<!-- Con API Key en URL (reemplaza TU_API_KEY con tu clave real) -->
+<iframe 
+    src="https://chatbot-gules-eta-69.vercel.app/?apiKey=TU_API_KEY" 
     width="100%" 
     height="600" 
     frameborder="0"
@@ -53,7 +75,7 @@ Para insertar el chatbot en tu sitio web, usa este código iframe:
 ```html
 <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
     <iframe 
-        src="https://chatbot-gules-eta-69.vercel.app/" 
+        src="https://chatbot-gules-eta-69.vercel.app/?apiKey=TU_API_KEY" 
         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 8px;"
         allow="clipboard-read; clipboard-write">
     </iframe>
@@ -76,7 +98,7 @@ Para insertar el chatbot en tu sitio web, usa este código iframe:
                 style="background: transparent; border: none; color: white; cursor: pointer; font-size: 20px;">×</button>
     </div>
     <iframe 
-        src="https://chatbot-gules-eta-69.vercel.app/" 
+        src="https://chatbot-gules-eta-69.vercel.app/?apiKey=TU_API_KEY" 
         width="100%" 
         height="calc(100% - 40px)" 
         frameborder="0"
@@ -87,6 +109,27 @@ Para insertar el chatbot en tu sitio web, usa este código iframe:
 ```
 
 📄 **Ver más ejemplos:** Abre el archivo `iframe-example.html` para ver todas las opciones con preview en vivo.
+
+### ⚠️ Solución de problemas con iframe
+
+Si el chatbot no funciona en el iframe (no puedes enviar mensajes):
+
+1. **Verifica que tengas la API Key configurada:**
+   - Añádela en el código (`apiKeyFromCode`) O
+   - Pásala como parámetro en la URL del iframe (`?apiKey=TU_CLAVE`)
+
+2. **Verifica la consola del navegador:**
+   - Abre las herramientas de desarrollador (F12)
+   - Ve a la pestaña "Console" para ver errores específicos
+   - Los errores te dirán si es un problema de API Key, CORS, o conexión
+
+3. **Prueba directamente la URL:**
+   - Abre `https://chatbot-gules-eta-69.vercel.app/` directamente en el navegador
+   - Si funciona ahí pero no en el iframe, puede ser un problema de headers (ya corregido en `vercel.json`)
+
+4. **Re-despliega en Vercel:**
+   - Los cambios en `vercel.json` requieren un nuevo despliegue
+   - Haz un push a GitHub y Vercel desplegará automáticamente
 
 ## 📝 Notas
 

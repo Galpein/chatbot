@@ -9,7 +9,11 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/index.html",
+      "headers": {
+        "Content-Security-Policy": "frame-ancestors *",
+        "X-Content-Type-Options": "nosniff"
+      }
     }
   ]
 }
